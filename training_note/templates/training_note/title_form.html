@@ -1,0 +1,47 @@
+{% extends 'training_note/main.html' %}
+{% load static %}
+{% block content%}
+<div class="row row-cols-1 row-cols-md-3">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+                <div class="form-group card p-5">
+                        <h3>
+                                Title Infomation
+                        </h3>
+                        <form method="POST" action="" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{form.as_p}}
+                                <input class='form-control btn-outline-info btn-info text-light' type="submit"
+                                        value="Submit">
+                        </form>
+                </div>
+        </div>
+        <div class="col-md-4"></div>
+</div>
+{% endblock %}
+{% block script%}
+<script src="{% static 'training_note/js/jquery-3.3.1.slim.min.js' %}"></script>
+<script src="{% static 'training_note/js/datepicker.min.js' %}"></script>
+<script>
+        $(function () {
+                $("#id_completed_date").datepicker(
+                        {
+                                format: 'yyyy-mm-dd',
+                                today: true
+                        }
+                );
+
+        });
+</script>
+<script>
+        $(document).ready(function () {
+                $('#id_title_name').addClass('form-control');
+                $('#id_title_description').addClass('form-control');
+                $('#id_completed').addClass('checkbox-inline');
+                $('#id_completed_date').addClass('form-control');
+                $('#id_completed_date').attr('autocomplete', 'off');
+                $('#id_image').addClass('form-control')
+
+        });
+</script>
+{% endblock%}

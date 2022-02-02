@@ -1,0 +1,36 @@
+{% load static %}
+
+<nav class="navbar navbar-dark bg-dark  border-bottom">
+        {% if request.user.is_authenticated %}
+        <div class="container-fluid">
+
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                </button>
+                <h4 class="navbar-text"> Training Note Management System</h4>
+                <a class="navbar-brand" href="#">Hello, {{request.user}}</a>
+                <div class="collapse navbar-collapse" id="navbarText">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                        ="container-fluid">
+                                        <a></a> <a class="nav-link active" aria-current="page"
+                                                href="{% url 'home' %}">Home</a>
+                                </li>
+                        </ul>
+                        <span><a class="text-light" href="{% url 'logout' %}">Logout</a></span>
+
+                </div>
+        </div>
+        {% else %}
+        <div class="container-fluid">
+                <a></a>
+                <h4 class="navbar-text"> Training Note Management System</h4>
+                <a class="navbar-brand" href="{% url 'login' %}"> Login </a>
+        </div>
+        {% endif %}
+
+
+
+</nav>

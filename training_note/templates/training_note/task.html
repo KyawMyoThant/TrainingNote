@@ -1,0 +1,32 @@
+{% extends 'training_note/main.html' %}
+{% load static %}
+{% block content%}
+<div class="row row-cols-1 row-cols-md-3">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 card">
+                <h4 class="p-3 m-2 card-header bg-primary text-light">Task Detail information</h4>
+                <hr>
+                <table class="table">
+                        <tbody>
+                                <tr>
+                                        <th>Task Name</th>
+                                        <td>{{ task.task_name }}</td>
+                                </tr>
+                                <tr>
+                                        <th>Training Started</th>
+                                        <td>{{ task.created_date }}</td>
+                                </tr>
+                                {% if task.completed %}
+                                <tr>
+                                        <th>Training Completed</th>
+                                        <td>{{ task.completed_date }}</td>
+                                </tr>
+                                {% endif %}
+                        </tbody>
+                </table>
+                <h5>About of training </h5>
+                <p>{{ task.task_description }}</p>
+        </div>
+        <div class="col-md-4"></div>
+</div>
+{% endblock %}

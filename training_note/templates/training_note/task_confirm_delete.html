@@ -1,0 +1,21 @@
+{% extends 'training_note/main.html' %}
+{% block content %}
+<div class="card-header">
+        <p>Are your sure you want to delete this task?
+                <br> <b>"{{task}}"</b>
+        </p>
+</div>
+
+<div class="card-body">
+        <form method="POST">
+                {% csrf_token %}
+
+                <a class="btn btn-outline-secondary text-dark" href="{% url 'title' titleid %}">&#8592; Go Back</a>
+                <input type="hidden" name='titleid' value='{{titleid}}'>
+                <input class="btn btn-outline-secondary text-dark" type="submit" value="Delete" />
+        </form>
+</div>
+
+
+
+{% endblock content %}

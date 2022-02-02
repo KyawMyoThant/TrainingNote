@@ -1,0 +1,150 @@
+{% extends 'training_note/main.html' %}
+{% load static %}
+{% block content%}
+<br>
+<div class="bg-primary p-3 mb-3">
+    <h3 class="text-light">{{ title.title_name }}</h3>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 g-4 ">
+    <div class="col-md-4 border-right card p-3">
+        <h4>Training Detail information</h4>
+        <hr>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Training Name</th>
+                    <td>{{ title.title_name }}</td>
+                </tr>
+                <tr>
+                    <th>Training Started</th>
+                    <td>{{ title.created_date }}</td>
+                </tr>
+                {% if title.completed %}
+                <tr>
+                    <th>Training Completed</th>
+                    <td>{{ title.completed_date }}</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        <h5>About of training </h5>
+        <p>{{ title.title_description }}</p>
+    </div>
+    <div class="col-md-2"></div>
+    <div class="col card p-3">
+        <div class="row">
+            <div class="col">
+                <h4>Tasks in This Training</h4>
+            </div>
+            <div class="col">
+                <form action="{% url 'task-create'%}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="titleid" value="{{ title.id }}">
+                    <input class="btn btn-outline-dark btn-success text-light" type="submit" value="Add">
+                </form>
+            </div>
+        </div>
+        <hr>
+        <table class="table data-table" id="table_id">
+            <thead>
+                <tr>
+                    <th>
+                        C
+                    </th>
+
+                    <th>
+                        Task Name
+                    </th>
+                    <th>
+                        Complete-date
+                    </th>
+
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for task in tasks %}
+                <tr>
+                    <td>{%if task.completed %}
+                        <h5 class="text-success">&#10004;</h5>
+                        {% else %}
+                        <h5 class="text-danger">&#10006;</h5>
+                        {% endif %}
+                    </td>
+
+                    <td>{{task.task_name}}</td>
+                    <td>
+                        {% if task.completed %}
+                        {{task.completed_date}}
+                        {% endif%}
+                    </td>
+                    <td>
+                        <div class="row g-1 m-0">
+                            <div class="col m-0 p-0">
+                                <form action="{% url 'task' task.id%}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="titleid" value="{{ title.id }}">
+                                    <button class="btn btn-outline-dark text-dark" type="submit" value="Detail"><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
+                                            <path
+                                                d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                                            <path
+                                                d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                                        </svg></button>
+                                </form>
+                            </div>
+                            <div class="col m-0 p-0">
+                                <form action="{% url 'task-edit' task.id%}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="titleid" value="{{ title.id }}">
+                                    <button class="btn btn-outline-dark text-dark" type="submit"><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                            <path
+                                                d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                        </svg></button>
+                                </form>
+                            </div>
+                            <div class="col m-0 p-0">
+                                <form action="{% url 'task-delete' task.id%}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="titleid" value="{{ title.id }}">
+                                    <button class="btn btn-outline-danger text-danger bg-light" tooltip="delete"
+                                        type="submit"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                            <path
+                                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                            <path fill-rule="evenodd"
+                                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                        </svg></button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </td>
+
+
+
+                </tr>
+                {% empty %}
+                There is no Task yet.
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function () {
+        $('#table_id').DataTable();
+    });
+</script>
+{% endblock %}
